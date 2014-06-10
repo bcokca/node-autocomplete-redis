@@ -12,7 +12,6 @@
         "grunt": "~0.4.2",
         "hapi": "~1.8.3",
         "formidable": "1.0.13",
-        "jade": "*",
         "mysql": "*",
         "async": "*",
         "redis" : "*"
