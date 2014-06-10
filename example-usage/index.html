@@ -8,10 +8,9 @@
 </head>
 <body>
 
-<alert type="'info'" >Typeahead from  <a href="http://angular-ui.github.com/bootstrap/">http://angular-ui.github.com/bootstrap/</a>"</alert>
 <div class='container-fluid' ng-controller="TypeaheadCtrl">
     <pre>Model: {{result | json}}</pre>
-    <input type="text" ng-model="result" typeahead="suggestion for suggestion in cities($viewValue)">
+    <input type="text" ng-model="result" typeahead="suggestion for suggestion in getLookupData($viewValue)">
 </div>
 </body>
 </html>
