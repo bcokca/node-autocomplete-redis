@@ -15,7 +15,7 @@ function TypeaheadCtrl($scope, $http, limitToFilter) {
     $scope.getLookupData = function(cityName) {
         console.log('hello');
 
-        return $http.get("http://localhost:8000/suggestion/key/myKey/value"+ cityName).
+        return $http.get("http://localhost:8000/suggestion/key/myKey/value/"+ cityName).
             then(function(response){
                 console.log(response.data);
                 return limitToFilter(response.data, 15);

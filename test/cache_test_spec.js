@@ -28,17 +28,35 @@ var cache = require("../lib/cache.js");
 
 
 describe("cache.js test", function(){
-    //1-users null, school 20, district null
-    it("school's teachers should be authorized for case 1", function () {
-        console.log('hello');
-        expect(true).toEqual(false);
 
-        /*
+    //add some keys to redis
+    beforeEach(function () {
+        cache.set('burhan', 10, function(err){
+           if(err){
+               console.log('error occurred during beforeEach method', err);
+           }
+        });
+    });
+
+
+    afterEach(function () {
+        cache.del('burhan', function(error){
+           if(error){
+               console.log('error occurred during deletion afterEach method', error);
+           }
+        })
+    });
+
+
+    it("get method should return 10", function () {
+
         runs(function() {
-            session.authorizeUser(config.teacher, null, config.school_id, null, function(err){
-                expect(err).toEqual(null);
+            cache.get('burhan', function(err, obj){
+                expect(err).toBe(null);
+                expect(obj).toEqual(10);
             });
-        }); */
+
+        });
 
     });
 

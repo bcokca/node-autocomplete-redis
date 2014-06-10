@@ -5,6 +5,8 @@
 // Loading node modules
 var http = require('https');
 
+var lookup = require('./example-usage/lookup');
+
 // var conn = require('./database');
 //var configuration = require('./config/configuration');
 
@@ -12,9 +14,6 @@ var http = require('https');
 //var utilities = require('./includes/utilities');
 
 var redis = require("redis");
-
-// cache, user classes, route js
-API_Routes = require('./routes');
 
 // Loading Hapi libraries
 var Hapi = require('hapi');
@@ -31,8 +30,6 @@ process.on('uncaughtException', function (err) {
 
 });
   */
-// Main function
-//internals.main = function () {
 
     var http = new Hapi.Server('localhost', 8000);
 
@@ -41,25 +38,34 @@ process.on('uncaughtException', function (err) {
     redisClient.select('10', function(err) { if(err)	console.log(err); });
 
     // Add the API routes and wait until onions are going pink.:P
-
-    http.route({
-        method: 'GET',
-        path: '/{path*}',
-        handler: {
-            directory: { path: './angular-linkedin', listing: false, index: true }
+    http.route(
+        {
+            method: 'GET',
+            path: '/{path*}',
+            handler: {
+                directory: { path: './example-usage', listing: false, index: true }
+            }
         }
-    });
+    );
 
-
-   // http.addRoutes(API_Routes.getRoutes);
-
+    http.addRoutes([
+        {
+            method: 'GET',
+            path: '/suggestion/key/{key}/value/{value}',
+            config: {
+                handler: lookup.getSuggestions,
+                cache: {
+                    expiresIn: 2000000,
+                    staleIn: 10000,
+                    staleTimeout: 500,
+                    mode: 'client+server'
+                }
+            }
+        }
+    ]);
     // Ignite the server
     http.start(function () {
         console.log('Server started at: ' + http.info.uri);
     });
 
-//};
-
-
-//internals.main();
 
